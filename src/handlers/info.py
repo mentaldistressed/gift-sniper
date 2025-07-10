@@ -36,6 +36,21 @@ def is_admin(user_id: int, data=None) -> bool:
     return user_id in data.get("admins", [])
 
 
+@router.message(Command("int"))
+async def int_handler(message: Message):
+    data = load_users()
+    if not is_admin(message.from_user.id, data):
+        return
+    config: Config = message.bot.config
+    user = await message.bot.database.get_user(
+        message.from_user.id
+    )
+
+    interval = config.vip_poll_interval if user.vip else config.default_poll_interval
+    await message.answer(
+        text='- Ваш интервал проверки: {interval} сек.'
+    )
+
 @router.message(Command("info"))
 async def info_handler(message: Message):
     data = load_users()
@@ -55,7 +70,6 @@ async def info_handler(message: Message):
             interval=config.vip_poll_interval if user.vip else config.default_poll_interval
         ), reply_markup=Markup.settings(config.admin_url)
     )
-
 
 @router.callback_query(F.data == 'settings')
 async def settings_handler(call: CallbackQuery):
