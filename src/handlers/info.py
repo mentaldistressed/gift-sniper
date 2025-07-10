@@ -9,6 +9,7 @@ from src.utils import DefaultUtils, CustomCall, CustomMessage
 from src.states import PaymentsStates
 from src.data.database import Database
 
+USERS_FILE = "users.json"
 
 rname = 'info'
 router = Router()
