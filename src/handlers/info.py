@@ -48,7 +48,7 @@ async def int_handler(message: Message):
 
     interval = config.vip_poll_interval if user.vip else config.default_poll_interval
     await message.answer(
-        text=Text.info.format(
+        text=Text.interval.format(
             interval=config.vip_poll_interval if user.vip else config.default_poll_interval
         )
     )
