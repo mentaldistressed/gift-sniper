@@ -40,7 +40,7 @@ async def check_new_gifts(bot: Bot, redis: RedisStorage, logger: FilteringBoundL
 
         if not has_pack:
             await bot.create_new_sticker_set(
-                user_id=bot.config.owner_bot_user_id,  # ID создателя пака
+                user_id=message.bot.config.owner,
                 name=pack_name,
                 title=pack_title,
                 stickers=[],
