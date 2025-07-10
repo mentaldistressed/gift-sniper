@@ -13,7 +13,7 @@ def is_owner_filter(message: Message):
     return message.from_user.id == message.bot.config.owner
 
 
-@router.message(Command('give_vip'), is_owner_filter)
+@router.message(Command('givevip'), is_owner_filter)
 async def give_vip_handler(message: Message):
     try:
         user_id = int(message.text.split()[1])
@@ -28,7 +28,7 @@ async def give_vip_handler(message: Message):
         await message.answer("❌ Использование: /give_vip <user_id>")
 
 
-@router.message(Command('remove_vip'), is_owner_filter)
+@router.message(Command('removevip'), is_owner_filter)
 async def remove_vip_handler(message: Message):
     try:
         user_id = int(message.text.split()[1])
@@ -43,7 +43,7 @@ async def remove_vip_handler(message: Message):
         await message.answer("❌ Использование: /remove_vip <user_id>")
 
 
-@router.message(Command('give_stars'), is_owner_filter)
+@router.message(Command('givestars'), is_owner_filter)
 async def give_stars_handler(message: Message):
     try:
         args = message.text.split()
@@ -60,7 +60,7 @@ async def give_stars_handler(message: Message):
         await message.answer("❌ Использование: /give_stars <user_id> <amount>")
 
 
-@router.message(Command('remove_stars'), is_owner_filter)
+@router.message(Command('removestars'), is_owner_filter)
 async def remove_stars_handler(message: Message):
     try:
         args = message.text.split()
