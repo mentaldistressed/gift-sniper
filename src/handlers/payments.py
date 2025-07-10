@@ -150,7 +150,7 @@ async def process_successful_payment(message: Message, state: FSMContext):
         chat_id=message.chat.id, 
         message_id=back_message_id
     )
-    
+
     await message.answer(
         text=Text.success_invoice_emoji, 
         reply_markup=Markup.start
@@ -159,8 +159,21 @@ async def process_successful_payment(message: Message, state: FSMContext):
         text=Text.successful_invoice,
         reply_markup=Markup.configurator([Markup.back('profile')])
     )
-    
+
     await state.clear()
+
+    owner_id = message.bot.config.owner
+    log_text = (
+        f"💰 Пользователь пополнил баланс\n"
+        f"👤 User ID: <code>{message.from_user.id}</code>\n"
+        f"🧾 Transaction ID: <code>{message.successful_payment.telegram_payment_charge_id}</code>"
+    )
+    await message.bot.send_message(
+        chat_id=owner_id,
+        text=log_text,
+        parse_mode="HTML"
+    )
+
 
 
 @router.callback_query(F.data == 'buy_vip')
