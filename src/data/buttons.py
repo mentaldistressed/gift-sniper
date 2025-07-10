@@ -18,11 +18,7 @@ class Markup:
         [InlineKeyboardButton(text='❓ FAQ', callback_data='faq')]
         # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
     ])
-    
-    faq = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='📝 Заполнить форму на возврат звёзд', callback_data='refundform')]
-        [InlineKeyboardButton(text='⬅️ Назад', callback_data=f'back|{back_type}')]
-    ])
+
 
     cancel_invoice = ReplyKeyboardMarkup(keyboard=[
         [KeyboardButton(text='Отмена')]
