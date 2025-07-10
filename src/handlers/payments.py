@@ -52,12 +52,12 @@ async def refund_command(message: Message):
     if not is_admin(message.from_user.id, data):
         return await message.answer("⛔️ У тебя нет прав для этой команды.")
 
-    if len(args) != 2:
-        return await message.answer("⚠️ Использование: /refund <telegram_payment_charge_id>")
+    if len(args) != 3:
+        return await message.answer("⚠️ Использование: /refund <user_id> <telegram_payment_charge_id>")
 
-    telegram_payment_charge_id = args[1]
+    user_id = args[1]
+    telegram_payment_charge_id = args[2]
 
-    user_id = message.from_user.id
     if not user_id:
         return await message.answer("❌ Транзакция не найдена.")
 
