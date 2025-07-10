@@ -38,9 +38,8 @@ async def check_new_gifts(bot: Bot, redis: RedisStorage, logger: FilteringBoundL
 
                 channel_id = -1002365357206
                 message_text = (
-                    f"🎁 Новый подарок!\n"
-                    f"Название: <b>{item.name}</b>\n"
-                    f"Цена: <b>{item.star_count:.2f}⭐️</b>\n" 
+                    f"<b>❗️ NEW GIFT</b> Новый подарок!\n"
+                    f"🎁 — Price: <b>{item.star_count:.2f} ⭐️\n"
                     f"Количество (supply): <b>{item.total_count if item.total_count else '∞'}</b>\n\n"
                     f'<a href="https://t.me/giftomaticrobot">💎Моментальная автоскупка подарков — Giftomatic</a>'
                 )
