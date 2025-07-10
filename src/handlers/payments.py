@@ -1,6 +1,6 @@
 import json
 from aiogram import Router, F
-from aiogram.filters import StateFilter
+from aiogram.filters import StateFilter, Command
 from aiogram.types import Message, CallbackQuery, LabeledPrice, PreCheckoutQuery
 from aiogram.fsm.context import FSMContext
 
