@@ -48,7 +48,7 @@ async def int_handler(message: Message):
 
     interval = config.vip_poll_interval if user.vip else config.default_poll_interval
     await message.answer(
-        text='- Ваш интервал проверки: {interval} сек.'
+        text='- Ваш интервал проверки: ' + interval + ' сек.'
     )
 
 @router.message(Command("info"))
