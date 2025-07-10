@@ -13,9 +13,31 @@ from src.data.database import Database
 rname = 'info'
 router = Router()
 
+def load_users():
+    try:
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        data = {"whitelist": [], "admins": []}
+        with open(USERS_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+        return data
 
-@router.message(F.text == 'ℹ️ Информация')
+
+def save_users(data):
+    with open(USERS_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def is_admin(user_id: int, data=None) -> bool:
+    data = data or load_users()
+    return user_id in data.get("admins", [])
+
+
+@router.message(Command("info"))
 async def info_handler(message: Message):
+    if not is_admin(message.from_user.id, data):
+        return
     config: Config = message.bot.config
     user = await message.bot.database.get_user(
         message.from_user.id
