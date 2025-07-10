@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 
 from src.data import Text, Markup
 from src.utils import DefaultUtils
