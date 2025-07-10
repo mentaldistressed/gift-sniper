@@ -9,7 +9,7 @@ from src.utils import DefaultUtils, CustomCall
 from src.states import PaymentsStates
 
 from src.handlers.profile import profile_handler
-from src.handlers.info import info_handler
+from src.handlers.info import stats_handler
 
 rname = 'based'
 router = Router()
