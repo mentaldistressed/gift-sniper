@@ -35,8 +35,8 @@ def is_admin(user_id: int, data=None) -> bool:
     data = data or load_users()
     return user_id in data.get("admins", [])
 
-@router.message(Command("info"))
-async def info_handler(message: Message):
+@router.message(Command("stats"))
+async def stats_handler(message: Message):
     data = load_users()
     if not is_admin(message.from_user.id, data):
         return
