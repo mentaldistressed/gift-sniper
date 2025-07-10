@@ -65,7 +65,12 @@ async def check_access_callback(call: CallbackQuery) -> bool:
     )
     return False
 
-
+@router.callback_query(F.data == 'faq')
+async def new_top_up_handler(call: CallbackQuery, state: FSMContext):
+    await call.message.edit_text(
+        text=Text.faq, 
+        reply_markup=Markup.faq
+    )
 
 @router.message(CommandStart())
 async def start_handler(message: Message):
