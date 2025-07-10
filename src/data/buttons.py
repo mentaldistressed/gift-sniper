@@ -3,9 +3,9 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, \
                             ReplyKeyboardMarkup, KeyboardButton
 
 class Markup:
-    start = ReplyKeyboardMarkup(keyboard=[
-        [KeyboardButton(text='👤 Профиль')],
-    ], resize_keyboard=True)
+    start = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text='👤 Профиль', callback_data='profile')]
+    ])
 
     # profile = InlineKeyboardMarkup(inline_keyboard=[
     #     [InlineKeyboardButton(text='Пополнить баланс', callback_data='top_up')],
@@ -19,9 +19,9 @@ class Markup:
         # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
     ])
     
-    faq = InlineKeyboardMarkup(inline_keyboard=[
+    faq = InlineKeyboardMarkup(back_type: str, inline_keyboard=[
         [InlineKeyboardButton(text='📝 Заполнить форму на возврат звёзд', callback_data='refundform')]
-        # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
+        [InlineKeyboardButton(text='⬅️ Назад', callback_data=f'back|{back_type}')]
     ])
 
     cancel_invoice = ReplyKeyboardMarkup(keyboard=[
