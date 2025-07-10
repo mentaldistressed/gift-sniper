@@ -48,8 +48,8 @@ async def create_invoice(message: Message, state: FSMContext):
     invoice_id = await message.bot.database.create_invoice(amount)
 
     invoice_message = await message.answer_invoice(
-        title="Пополнение баланса",
-        description="После пополнения работа бота в фоне начнется автоматически",
+        title="💎 Giftomatic — пополнение баланса",
+        description="Пополнение баланса для автозакупки подарков",
         payload=str(invoice_id),
         provider_token="",
         currency="XTR",
