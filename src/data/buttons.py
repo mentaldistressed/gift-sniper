@@ -3,9 +3,9 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, \
                             ReplyKeyboardMarkup, KeyboardButton
 
 class Markup:
-    start = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='👤 Профиль', callback_data='profile')]
-    ])
+    start = ReplyKeyboardMarkup(keyboard=[
+        [KeyboardButton(text='👤 Профиль')],
+    ], resize_keyboard=True)
 
     # profile = InlineKeyboardMarkup(inline_keyboard=[
     #     [InlineKeyboardButton(text='Пополнить баланс', callback_data='top_up')],
@@ -18,7 +18,11 @@ class Markup:
         [InlineKeyboardButton(text='❓ FAQ', callback_data='faq')]
         # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
     ])
-
+    
+    faq = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text='📝 Заполнить форму на возврат звёзд', callback_data='refundform')]
+        # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
+    ])
 
     cancel_invoice = ReplyKeyboardMarkup(keyboard=[
         [KeyboardButton(text='Отмена')]
@@ -44,13 +48,6 @@ class Markup:
     def settings(admin_url: str) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='🖥 Администрация', url=admin_url)]
-    ])
-    
-    @staticmethod
-    def faq(back_type: str) -> InlineKeyboardMarkup:
-        return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='📝 Заполнить форму на возврат звёзд', callback_data='refundform')],
-        [InlineKeyboardButton(text='⬅️ Назад', callback_data=f'back|{back_type}')]
     ])
 
     @staticmethod
