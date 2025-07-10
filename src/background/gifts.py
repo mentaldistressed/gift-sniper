@@ -29,7 +29,6 @@ async def check_new_gifts(bot: Bot, redis: RedisStorage, logger: FilteringBoundL
     try:
         result = await bot.get_available_gifts()
         validate_result = []
-        print(result)
 
         for item in result.gifts:
             gift_id = int(item.id)
