@@ -7,8 +7,6 @@ from aiogram import Bot
 
 from src.redis import RedisStorage
 
-
-
 async def process_user_batch(bot: Bot, users: list, gift_data: dict, logger: FilteringBoundLogger):
     for user in users:
         try:
