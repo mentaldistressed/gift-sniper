@@ -39,8 +39,6 @@ def is_admin(user_id: int, data=None) -> bool:
 @router.message(Command("int"))
 async def int_handler(message: Message):
     data = load_users()
-    if not is_admin(message.from_user.id, data):
-        return
     config: Config = message.bot.config
     user = await message.bot.database.get_user(
         message.from_user.id
