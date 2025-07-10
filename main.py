@@ -38,7 +38,7 @@ async def main():
 
     bot.logger = logger 
     bot.config = config
-    bot.starup_date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
+    bot.startup_date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
 
     bot.database = Database()
     await bot.database.init_db()
