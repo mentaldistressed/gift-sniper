@@ -35,22 +35,6 @@ def is_admin(user_id: int, data=None) -> bool:
     data = data or load_users()
     return user_id in data.get("admins", [])
 
-
-@router.message(Command("int"))
-async def int_handler(message: Message):
-    data = load_users()
-    config: Config = message.bot.config
-    user = await message.bot.database.get_user(
-        message.from_user.id
-    )
-
-    interval = config.vip_poll_interval if user.vip else config.default_poll_interval
-    await message.answer(
-        text=Text.interval.format(
-            interval=config.vip_poll_interval if user.vip else config.default_poll_interval
-        )
-    )
-
 @router.message(Command("info"))
 async def info_handler(message: Message):
     data = load_users()
