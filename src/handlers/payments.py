@@ -163,11 +163,14 @@ async def process_successful_payment(message: Message, state: FSMContext):
     await state.clear()
 
     owner_id = message.bot.config.owner
+    amount = message.successful_payment.total_amount / 1000
     log_text = (
         f"💰 Пользователь пополнил баланс\n"
         f"👤 User ID: <code>{message.from_user.id}</code>\n"
-        f"🧾 Transaction ID: <code>{message.successful_payment.telegram_payment_charge_id}</code>"
+        f"🧾 Transaction ID: <code>{message.successful_payment.telegram_payment_charge_id}</code>\n"
+        f"💳 Сумма: <b>{amount:.2f}⭐️</b>"
     )
+
     await message.bot.send_message(
         chat_id=owner_id,
         text=log_text,
