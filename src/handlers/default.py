@@ -110,12 +110,20 @@ async def cancel_handler_invoice(message: Message, state: FSMContext):
     await start_handler(message)
 
 
-@router.callback_query(F.data == 'dev')
+@router.callback_query(F.data == 'mode')
 async def in_development_handler(call: CallbackQuery):
     if not await check_access_callback(call):
         return
     await call.answer(
         text=Text.in_development, show_alert=True
+    )
+
+@router.callback_query(F.data == 'refundform')
+async def in_development_handler(call: CallbackQuery):
+    if not await check_access_callback(call):
+        return
+    await call.answer(
+        text=Text.in_development_form, show_alert=True
     )
 
 @router.message(Command("add"))
