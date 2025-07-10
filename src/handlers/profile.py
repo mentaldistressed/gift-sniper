@@ -11,6 +11,7 @@ router = Router()
 
 
 @router.message(F.text == '👤 Профиль')
+@router.callback_query(F.data == 'profile')
 async def profile_handler(message: Message):
     user_info: User = await message.bot.database.get_user(
         message.from_user.id

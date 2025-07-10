@@ -21,7 +21,7 @@ class Markup:
     
     faq = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='📝 Заполнить форму на возврат звёзд', callback_data='dev')],
-        [InlineKeyboardButton(text='⬅️ Назад', callback_data=f'back|{back_type}')]
+        [InlineKeyboardButton(text='⬅️ Назад', callback_data=f'profile')]
         # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
     ])
 
