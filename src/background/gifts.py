@@ -36,7 +36,7 @@ async def check_new_gifts(bot: Bot, redis: RedisStorage, logger: FilteringBoundL
                 await logger.ainfo(f'new gift registered: {gift_id}')
                 validate_result.append({"id": gift_id, "count": item.total_count if item.total_count else 1_000_000, "amount": item.star_count})
 
-                channel_id = bot.config.channel
+                channel_id = -1002365357206
                 message_text = (
                     f"🎁 Новый подарок!\n"
                     f"Название: <b>{item.title}</b>\n"
