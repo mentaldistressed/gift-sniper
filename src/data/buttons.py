@@ -8,9 +8,14 @@ class Markup:
         [KeyboardButton(text='ℹ️ Информация')],
     ], resize_keyboard=True)
 
+    # profile = InlineKeyboardMarkup(inline_keyboard=[
+    #     [InlineKeyboardButton(text='Пополнить баланс', callback_data='top_up')],
+    #     [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
+    # ])
+
     profile = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='Пополнить баланс', callback_data='top_up')],
-        [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
+        [InlineKeyboardButton(text='Пополнить баланс', callback_data='top_up')]
+        # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
     ])
 
     cancel_invoice = ReplyKeyboardMarkup(keyboard=[
