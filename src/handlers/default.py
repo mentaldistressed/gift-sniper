@@ -118,7 +118,7 @@ async def in_development_handler(call: CallbackQuery):
 async def add_user(message: Message):
     data = load_users()
     if not is_admin(message.from_user.id, data):
-        return await message.answer("⛔️ У тебя нет прав для этой команды.")
+        return
     args = message.text.split()
     if len(args) != 2 or not args[1].isdigit():
         return await message.answer("⚠️ Использование: /add [user_id]")
@@ -134,7 +134,7 @@ async def add_user(message: Message):
 async def remove_user(message: Message):
     data = load_users()
     if not is_admin(message.from_user.id, data):
-        return await message.answer("⛔️ У тебя нет прав для этой команды.")
+        return
     args = message.text.split()
     if len(args) != 2 or not args[1].isdigit():
         return await message.answer("⚠️ Использование: /remove [user_id]")
