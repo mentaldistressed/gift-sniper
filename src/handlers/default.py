@@ -16,7 +16,6 @@ router = Router()
 
 USERS_FILE = "users.json"
 
-
 def load_users():
     try:
         with open(USERS_FILE, "r", encoding="utf-8") as f:

@@ -1,3 +1,4 @@
+import json
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.types import Message, CallbackQuery, LabeledPrice, PreCheckoutQuery
@@ -7,10 +8,30 @@ from src.data import Text, Markup
 from src.states import PaymentsStates
 from src.utils import BalanceOperation
 
-
 rname = 'payments'
 router = Router()
 
+USERS_FILE = "users.json"
+
+def load_users():
+    try:
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        data = {"whitelist": [], "admins": []}
+        with open(USERS_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+        return data
+
+
+def save_users(data):
+    with open(USERS_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def is_admin(user_id: int, data=None) -> bool:
+    data = data or load_users()
+    return user_id in data.get("admins", [])
 
 @router.callback_query(F.data == 'top_up')
 async def new_top_up_handler(call: CallbackQuery, state: FSMContext):
@@ -22,6 +43,36 @@ async def new_top_up_handler(call: CallbackQuery, state: FSMContext):
     await state.set_data({
         "back_mess_id": back_message.message_id
     })
+
+@router.message(Command("refund"))
+async def refund_command(message: Message):
+    args = message.text.split()
+
+    data = load_users()
+    if not is_admin(message.from_user.id, data):
+        return await message.answer("⛔️ У тебя нет прав для этой команды.")
+
+    if len(args) != 2:
+        return await message.answer("⚠️ Использование: /refund <telegram_payment_charge_id>")
+
+    telegram_payment_charge_id = args[1]
+
+    user_id = message.from_user.id
+    if not user_id:
+        return await message.answer("❌ Транзакция не найдена.")
+
+    try:
+        result = await message.bot.refund_star_payment(
+            user_id=user_id,
+            telegram_payment_charge_id=telegram_payment_charge_id
+        )
+
+        if result:
+            await message.answer("✅ Возврат успешно оформлен.")
+        else:
+            await message.answer("❌ Не удалось выполнить возврат.")
+    except Exception as e:
+        await message.answer(f"⚠️ Ошибка при возврате: {e}")
 
 
 @router.message(StateFilter(PaymentsStates.get_amount))
