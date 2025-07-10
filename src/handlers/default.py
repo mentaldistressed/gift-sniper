@@ -48,9 +48,9 @@ async def check_access(message: Message) -> bool:
     if is_admin(message.from_user.id, data) or is_whitelisted(message.from_user.id, data):
         return True
     await message.answer(
-        f"❌ У Вас нет доступа к приватному боту.\n\n"
+        f"❌ У Вас нет доступа к приватному боту\n\n"
         f"На данный момент доступ имеет {len(data.get('whitelist', []))} человек",
-        reply_markup=Markup.start
+        reply_markup=ReplyKeyboardRemove()
     )
     return False
 
@@ -65,6 +65,7 @@ async def check_access_callback(call: CallbackQuery) -> bool:
         show_alert=True
     )
     return False
+
 
 
 @router.message(CommandStart())
