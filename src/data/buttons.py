@@ -13,7 +13,8 @@ class Markup:
     # ])
 
     profile = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='Пополнить баланс', callback_data='top_up')]
+        [InlineKeyboardButton(text='💰 Пополнить баланс', callback_data='top_up')],
+        [InlineKeyboardButton(text='⚙️ Настройки', callback_data='settings')],
         # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
     ])
 
@@ -40,7 +41,6 @@ class Markup:
     @staticmethod
     def settings(admin_url: str) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='Настройки', callback_data='settings')],
         [InlineKeyboardButton(text='🖥 Администрация', url=admin_url)]
     ])
 
