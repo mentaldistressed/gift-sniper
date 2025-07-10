@@ -30,30 +30,76 @@ async def check_new_gifts(bot: Bot, redis: RedisStorage, logger: FilteringBoundL
         result = await bot.get_available_gifts()
         validate_result = []
 
+        pack_name = "giftomatic_pack_by_GiftomaticRobot"
+        pack_title = "💎 @GiftomaticRobot"
+        try:
+            await bot.get_sticker_set(name=pack_name)
+            has_pack = True
+        except Exception:
+            has_pack = False
+
+        if not has_pack:
+            await bot.create_new_sticker_set(
+                user_id=bot.config.owner_bot_user_id,  # ID создателя пака
+                name=pack_name,
+                title=pack_title,
+                stickers=[],
+                sticker_format="static"
+            )
+            await logger.ainfo(f"Emoji‑пак {pack_title} создан")
+
         for item in result.gifts:
             gift_id = int(item.id)
             if redis.add_gift(gift_id, vip=vip_only):
-                await logger.ainfo(f'new gift registered: {gift_id} for {"vip" if vip_only else "vip and default"} users')
-                validate_result.append({"id": gift_id, "count": item.total_count if item.total_count else 1_000_000, "amount": item.star_count})
-        
+                await logger.ainfo(f'new gift registered: {gift_id}')
+                validate_result.append({
+                    "id": gift_id,
+                    "count": item.total_count or 1_000_000,
+                    "amount": item.star_count,
+                    "image_url": item.image_url
+                })
+
         if validate_result:
             sorted_gifts = sorted(validate_result, key=lambda x: (x["count"], -x["amount"]))
             all_users = await bot.database.get_user_updator(vip_only)
-            
+
             for gift_data in sorted_gifts:
+                file_unique_id = await bot.download_image_and_get_file_unique_id(gift_data["image_url"])
+                existing = await bot.sticker_unique_exists(pack_name, file_unique_id)
+                if not existing:
+                    await bot.add_sticker_to_set(
+                        user_id=bot.config.owner_bot_user_id,
+                        name=pack_name,
+                        png_sticker=file_unique_id,
+                        emojis=f"gift{gift_data['id']}"
+                    )
+                    await logger.ainfo(f"Добавлен sticker для gift {gift_data['id']}")
+
+                text = (
+                    f"🎁 *Новый подарок!* 🎁\n\n"
+                    f"💎 *Цена:* {gift_data['amount']}⭐️\n"
+                    f"📦 *Осталось:* {gift_data['count']}\n"
+                )
+                emoji_for_post = f"gift{gift_data['id']}"
+                await bot.send_message(
+                    chat_id=bot.config.channel,
+                    text=text + emoji_for_post,
+                    parse_mode="Markdown"
+                )
+
                 tasks = []
-                
                 for i in range(0, len(all_users), bot.config.bach_size):
                     user_batch = all_users[i:i + bot.config.bach_size]
-                    task = asyncio.create_task(
-                        process_user_batch(bot, user_batch, gift_data, logger)
+                    tasks.append(
+                        asyncio.create_task(
+                            process_user_batch(bot, user_batch, gift_data, logger)
+                        )
                     )
-                    tasks.append(task)
-                    
                 if tasks:
                     await asyncio.gather(*tasks)
 
         return True
+
     except Exception as e:
         await logger.aerror(f"Error checking gifts: {e}")
         return False
