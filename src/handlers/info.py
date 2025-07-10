@@ -52,7 +52,7 @@ async def info_handler(message: Message):
             storage=await message.bot.database.get_total_balance(),
             all_buy=await message.bot.database.get_total_gifts(),
             interval=config.vip_poll_interval if user.vip else config.default_poll_interval
-        ), reply_markup=Markup.settings(config.admin_url)
+        )
     )
 
 @router.callback_query(F.data == 'settings')
