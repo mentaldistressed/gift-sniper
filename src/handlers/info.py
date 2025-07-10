@@ -36,6 +36,7 @@ def is_admin(user_id: int, data=None) -> bool:
 
 @router.message(Command("info"))
 async def info_handler(message: Message):
+    data = load_users()
     if not is_admin(message.from_user.id, data):
         return
     config: Config = message.bot.config
