@@ -15,6 +15,7 @@ class Markup:
     profile = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='💰 Пополнить баланс', callback_data='top_up')],
         [InlineKeyboardButton(text='⚙️ Настройки режима', callback_data='dev')],
+        [InlineKeyboardButton(text='❓ FAQ', callback_data='faq')]
         # [InlineKeyboardButton(text='🚀 Приобрести VIP', callback_data='buy_vip')]
     ])
 
