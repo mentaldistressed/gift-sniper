@@ -40,7 +40,7 @@ async def check_new_gifts(bot: Bot, redis: RedisStorage, logger: FilteringBoundL
 
         if not has_pack:
             await bot.create_new_sticker_set(
-                user_id=message.bot.config.owner,
+                user_id=bot.config.owner,
                 name=pack_name,
                 title=pack_title,
                 stickers=[],
@@ -68,7 +68,7 @@ async def check_new_gifts(bot: Bot, redis: RedisStorage, logger: FilteringBoundL
                 existing = await bot.sticker_unique_exists(pack_name, file_unique_id)
                 if not existing:
                     await bot.add_sticker_to_set(
-                        user_id=bot.config.owner_bot_user_id,
+                        user_id=bot.config.owner,
                         name=pack_name,
                         png_sticker=file_unique_id,
                         emojis=f"gift{gift_data['id']}"
