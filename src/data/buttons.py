@@ -2,11 +2,36 @@ from typing import Tuple, List
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, \
                             ReplyKeyboardMarkup, KeyboardButton
 
+def load_users():
+    try:
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        data = {"whitelist": [], "admins": []}
+        with open(USERS_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+        return data
+
+
+def save_users(data):
+    with open(USERS_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def is_admin(user_id: int, data=None) -> bool:
+    data = data or load_users()
+    return user_id in data.get("admins", [])
+
 class Markup:
-    start = ReplyKeyboardMarkup(keyboard=[
+    if not is_admin(message.from_user.id, data):
+        start = ReplyKeyboardMarkup(keyboard=[
         [KeyboardButton(text='👤 Профиль')],
-        [KeyboardButton(text='ℹ️ Информация')],
     ], resize_keyboard=True)
+    else:
+        start = ReplyKeyboardMarkup(keyboard=[
+            [KeyboardButton(text='👤 Профиль')],
+            [KeyboardButton(text='ℹ️ Информация')],
+        ], resize_keyboard=True)
 
     # profile = InlineKeyboardMarkup(inline_keyboard=[
     #     [InlineKeyboardButton(text='Пополнить баланс', callback_data='top_up')],
