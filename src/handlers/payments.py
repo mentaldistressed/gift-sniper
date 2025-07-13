@@ -37,7 +37,7 @@ def is_admin(user_id: int, data=None) -> bool:
 async def new_top_up_handler(call: CallbackQuery, state: FSMContext):
     back_message = await call.message.edit_text(
         text=Text.get_amount, 
-        reply_markup=Markup.configurator([Markup.back('profile')])
+        reply_markup=Markup.configurator([Markup.topup('profile')])
     )
     await state.set_state(PaymentsStates.get_amount)
     await state.set_data({
