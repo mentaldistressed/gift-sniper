@@ -17,7 +17,6 @@ class Config(BaseModel):
     admin_url: str
     developer: str 
     owner: int
-    split_tg: str
 
     vip_poll_interval: int
     default_poll_interval: int 
