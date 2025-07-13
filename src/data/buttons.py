@@ -51,7 +51,7 @@ class Markup:
     ])
 
     @staticmethod
-    def topup(back_type: str) -> InlineKeyboardButton:
+    def topup(back_type: str, split_tg: str) -> InlineKeyboardButton:
         return InlineKeyboardButton(inline_keyboard=[
             [InlineKeyboardButton(text='⭐ Купить звёзды', url=split_tg)],
             [InlineKeyboardButton(text='⬅️ Назад', callback_data=f'back|{back_type}')]
